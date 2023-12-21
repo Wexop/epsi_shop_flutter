@@ -1,50 +1,78 @@
+import 'package:epsi_shop/bo/article.dart';
 import 'package:flutter/material.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<HomePage> createState() => HomePageSate();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+class HomePageSate extends State<HomePage> {
+  final List<Article> listArticles = <Article>[
+    Article(
+        nom: "Test",
+        image:
+            "https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dwfe351ec1/images/B3DFBTB794-view1.jpg?sw=1024&sh=1024",
+        description: "test",
+        prix: 3.37,
+        categorie: "test"),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+        appBar: AppBar(
+            title: const Center(
+              child: Text(
+                "E-Commerce",
+              ),
             ),
-            Text(
-              '$_counter',
-              style:
-                  TextStyle(fontSize: _counter.toDouble(), color: Colors.red),
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+            backgroundColor: Theme.of(context).colorScheme.inversePrimary),
+        body: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Stack(
+            children: [
+              Center(
+                child: ListView.builder(
+                  itemCount: listArticles.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      tileColor: Colors.blueAccent,
+                      trailing: TextButton(
+                        child: Text("Ajouter"),
+                        onPressed: () {},
+                      ),
+                      title: Text(listArticles[index].nom),
+                      subtitle: Text(
+                        listArticles[index].prixEuro(),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      leading: Image.network(
+                        "https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dwfe351ec1/images/B3DFBTB794-view1.jpg?sw=1024&sh=1024",
+                        scale: 1,
+                      ),
+                    );
+                  },
+                ),
+              )
+            ],
+          ),
+        ));
+  }
+}
+
+class EmptyCart extends StatelessWidget {
+  const EmptyCart({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text("Votre panier est actuellement vide"),
+        Icon(Icons.image)
+      ],
     );
   }
 }

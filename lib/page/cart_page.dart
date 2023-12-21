@@ -57,7 +57,7 @@ class CartPageSate extends State<CartPage> {
                                 onPressed: () => deleteArticle(index),
                                 child: const Icon(Icons.delete)),
                             title: Text(listArticles[index].nom),
-                            leading: Text(listArticles[index].description),
+                            subtitle: Text(listArticles[index].description),
                           );
                         },
                       ),

@@ -1,4 +1,4 @@
-import 'package:epsi_shop/page/cart_page.dart';
+import 'package:epsi_shop/page/home_page.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
@@ -13,6 +13,6 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlue),
           useMaterial3: true,
         ),
-        home: CartPage());
+        home: HomePage());
   }
 }
