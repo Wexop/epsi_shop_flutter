@@ -1,6 +1,8 @@
 import 'package:epsi_shop/bo/article.dart';
 import 'package:flutter/material.dart';
 
+import 'cart_page.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -19,10 +21,40 @@ class HomePageSate extends State<HomePage> {
         categorie: "test"),
   ];
 
+  num nbArticles = 0;
+
+  onAdd() {
+    setState(() {
+      nbArticles++;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+            actions: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: FilledButton(
+                    onPressed: () => {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => CartPage(),
+                            ),
+                          )
+                        },
+                    child: Row(
+                      children: [
+                        const Icon(Icons.shopping_cart),
+                        Text(
+                          nbArticles.toString(),
+                          style: const TextStyle(fontSize: 20),
+                        )
+                      ],
+                    )),
+              )
+            ],
             title: const Center(
               child: Text(
                 "E-Commerce",
@@ -41,7 +73,7 @@ class HomePageSate extends State<HomePage> {
                       tileColor: Colors.blueAccent,
                       trailing: TextButton(
                         child: Text("Ajouter"),
-                        onPressed: () {},
+                        onPressed: () => onAdd(),
                       ),
                       title: Text(listArticles[index].nom),
                       subtitle: Text(
