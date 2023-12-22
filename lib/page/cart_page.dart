@@ -1,11 +1,12 @@
 import 'package:epsi_shop/bo/article.dart';
+import 'package:epsi_shop/bo/cart.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CartPage extends StatefulWidget {
-  List<Article> articles;
   num cartPrice = 0;
 
-  CartPage({super.key, required this.articles});
+  CartPage({super.key});
 
   @override
   State<CartPage> createState() => CartPageSate();
@@ -14,21 +15,16 @@ class CartPage extends StatefulWidget {
 class CartPageSate extends State<CartPage> {
   CartPageSate();
 
-  void deleteArticle(index) {
-    setState(() {
-      widget.articles.removeAt(index);
-    });
-  }
+  void deleteArticle(Article article, BuildContext ctx) {}
 
   @override
   Widget build(BuildContext context) {
     num price = 0;
-    widget.articles.forEach((element) {
+    context.watch<Cart>().articles.forEach((element) {
       price += element.prix;
     });
     setState(() {
       widget.cartPrice = num.parse((price).toStringAsFixed(2));
-      ;
     });
 
     return Scaffold(
@@ -50,27 +46,31 @@ class CartPageSate extends State<CartPage> {
                   Text("${widget.cartPrice.toString()} €"),
                 ],
               ),
-              widget.articles.isEmpty
-                  ? const Center(child: EmptyCart())
-                  : Expanded(
-                      child: ListView.builder(
-                        itemCount: widget.articles.length,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            tileColor: Colors.blueAccent,
-                            trailing: ElevatedButton(
-                                onPressed: () => deleteArticle(index),
-                                child: const Icon(Icons.delete)),
-                            title: Text(widget.articles[index].nom),
-                            subtitle: Text(widget.articles[index].description),
-                            leading: Image.network(
-                              widget.articles[index].image,
-                              scale: 1,
-                            ),
-                          );
-                        },
-                      ),
-                    )
+              Consumer<Cart>(builder: (context, cart, child) {
+                return cart.articles.isEmpty
+                    ? const Center(child: EmptyCart())
+                    : Expanded(
+                        child: ListView.builder(
+                          itemCount: cart.articles.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              tileColor: Colors.blueAccent,
+                              trailing: ElevatedButton(
+                                  onPressed: () =>
+                                      cart.remove(cart.articles[index]),
+                                  child: const Icon(Icons.delete)),
+                              title: Text(
+                                  context.watch<Cart>().articles[index].nom),
+                              subtitle: Text(cart.articles[index].description),
+                              leading: Image.network(
+                                cart.articles[index].image,
+                                scale: 1,
+                              ),
+                            );
+                          },
+                        ),
+                      );
+              })
             ],
           ),
         ));

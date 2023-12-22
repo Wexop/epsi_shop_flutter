@@ -1,6 +1,9 @@
 import 'package:epsi_shop/bo/article.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+
+import '../bo/cart.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -61,7 +64,7 @@ class HomePageSate extends State<HomePage> {
 
   onAdd(Article article) {
     setState(() {
-      articleSelected.add(article);
+      context.read<Cart>().add(article);
     });
   }
 
@@ -79,7 +82,7 @@ class HomePageSate extends State<HomePage> {
                       children: [
                         const Icon(Icons.shopping_cart),
                         Text(
-                          articleSelected.length.toString(),
+                          context.watch<Cart>().articles.length.toString(),
                           style: const TextStyle(fontSize: 20),
                         )
                       ],

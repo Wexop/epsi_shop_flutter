@@ -3,8 +3,6 @@ import 'package:epsi_shop/page/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import 'bo/article.dart';
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -34,7 +32,7 @@ final GoRouter _router = GoRouter(
         GoRoute(
           path: 'cart',
           builder: (BuildContext context, GoRouterState state) {
-            return CartPage(articles: state.extra as List<Article>);
+            return CartPage();
           },
         ),
       ],
