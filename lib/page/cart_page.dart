@@ -1,4 +1,3 @@
-import 'package:epsi_shop/bo/article.dart';
 import 'package:epsi_shop/bo/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,8 +13,6 @@ class CartPage extends StatefulWidget {
 
 class CartPageSate extends State<CartPage> {
   CartPageSate();
-
-  void deleteArticle(Article article, BuildContext ctx) {}
 
   @override
   Widget build(BuildContext context) {

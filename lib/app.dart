@@ -1,3 +1,5 @@
+import 'package:epsi_shop/bo/article.dart';
+import 'package:epsi_shop/page/article_detail.dart';
 import 'package:epsi_shop/page/cart_page.dart';
 import 'package:epsi_shop/page/home_page.dart';
 import 'package:flutter/material.dart';
@@ -30,11 +32,18 @@ final GoRouter _router = GoRouter(
       },
       routes: <RouteBase>[
         GoRoute(
-          path: 'cart',
+            path: 'cart',
+            builder: (BuildContext context, GoRouterState state) {
+              return CartPage();
+            }),
+        GoRoute(
+          path: 'detail',
           builder: (BuildContext context, GoRouterState state) {
-            return CartPage();
+            return ArticleDetailPage(
+              article: state.extra as Article,
+            );
           },
-        ),
+        )
       ],
     ),
   ],
