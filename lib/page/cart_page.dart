@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class CartPage extends StatefulWidget {
   List<Article> articles;
+  num cartPrice = 0;
 
   CartPage({super.key, required this.articles});
 
@@ -21,6 +22,14 @@ class CartPageSate extends State<CartPage> {
 
   @override
   Widget build(BuildContext context) {
+    num price = 0;
+    widget.articles.forEach((element) {
+      price += element.prix;
+    });
+    setState(() {
+      widget.cartPrice = price;
+    });
+
     return Scaffold(
         appBar: AppBar(
             title: const Center(
@@ -33,11 +42,11 @@ class CartPageSate extends State<CartPage> {
           padding: const EdgeInsets.all(15.0),
           child: Stack(
             children: [
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text("Votre panier est de : "),
-                  Text("00.00€"),
+                  const Text("Votre panier est de : "),
+                  Text("${widget.cartPrice.toString()} €"),
                 ],
               ),
               Center(
