@@ -2,25 +2,20 @@ import 'package:epsi_shop/bo/article.dart';
 import 'package:flutter/material.dart';
 
 class CartPage extends StatefulWidget {
-  CartPage({super.key});
+  List<Article> articles;
+
+  CartPage({super.key, required this.articles});
 
   @override
   State<CartPage> createState() => CartPageSate();
 }
 
 class CartPageSate extends State<CartPage> {
-  final List<Article> listArticles = <Article>[
-    Article(
-        nom: "Test",
-        image: "test",
-        description: "test",
-        prix: 3.37,
-        categorie: "test"),
-  ];
+  CartPageSate();
 
   void deleteArticle(index) {
     setState(() {
-      listArticles.removeAt(index);
+      widget.articles.removeAt(index);
     });
   }
 
@@ -46,18 +41,22 @@ class CartPageSate extends State<CartPage> {
                 ],
               ),
               Center(
-                child: listArticles.isEmpty
+                child: widget.articles.isEmpty
                     ? const EmptyCart()
                     : ListView.builder(
-                        itemCount: listArticles.length,
+                        itemCount: widget.articles.length,
                         itemBuilder: (context, index) {
                           return ListTile(
                             tileColor: Colors.blueAccent,
                             trailing: ElevatedButton(
                                 onPressed: () => deleteArticle(index),
                                 child: const Icon(Icons.delete)),
-                            title: Text(listArticles[index].nom),
-                            subtitle: Text(listArticles[index].description),
+                            title: Text(widget.articles[index].nom),
+                            subtitle: Text(widget.articles[index].description),
+                            leading: Image.network(
+                              widget.articles[index].image,
+                              scale: 1,
+                            ),
                           );
                         },
                       ),

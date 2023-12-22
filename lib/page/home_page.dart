@@ -1,7 +1,6 @@
 import 'package:epsi_shop/bo/article.dart';
 import 'package:flutter/material.dart';
-
-import 'cart_page.dart';
+import 'package:go_router/go_router.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -18,14 +17,20 @@ class HomePageSate extends State<HomePage> {
             "https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dwfe351ec1/images/B3DFBTB794-view1.jpg?sw=1024&sh=1024",
         description: "test",
         prix: 3.37,
-        categorie: "test"),
+        categorie: "test")
   ];
 
-  num nbArticles = 0;
+  final articleSelected = <Article>[];
 
   onAdd() {
     setState(() {
-      nbArticles++;
+      articleSelected.add(Article(
+          nom: "Test",
+          image:
+              "https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dwfe351ec1/images/B3DFBTB794-view1.jpg?sw=1024&sh=1024",
+          description: "test",
+          prix: 3.37,
+          categorie: "test"));
     });
   }
 
@@ -37,18 +42,13 @@ class HomePageSate extends State<HomePage> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: FilledButton(
-                    onPressed: () => {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => CartPage(),
-                            ),
-                          )
-                        },
+                    onPressed: () =>
+                        context.go("/cart", extra: articleSelected),
                     child: Row(
                       children: [
                         const Icon(Icons.shopping_cart),
                         Text(
-                          nbArticles.toString(),
+                          articleSelected.length.toString(),
                           style: const TextStyle(fontSize: 20),
                         )
                       ],
@@ -81,7 +81,7 @@ class HomePageSate extends State<HomePage> {
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       leading: Image.network(
-                        "https://www.histoiredor.com/dw/image/v2/BCQS_PRD/on/demandware.static/-/Sites-THOM_CATALOG/default/dwfe351ec1/images/B3DFBTB794-view1.jpg?sw=1024&sh=1024",
+                        listArticles[index].image,
                         scale: 1,
                       ),
                     );

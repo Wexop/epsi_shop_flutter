@@ -1,5 +1,9 @@
+import 'package:epsi_shop/page/cart_page.dart';
 import 'package:epsi_shop/page/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+import 'bo/article.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -7,12 +11,33 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlue),
-          useMaterial3: true,
-        ),
-        home: HomePage());
+    return MaterialApp.router(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlue),
+        useMaterial3: true,
+      ),
+      routerConfig: _router,
+    );
   }
 }
+
+/// The route configuration.
+final GoRouter _router = GoRouter(
+  routes: <RouteBase>[
+    GoRoute(
+      path: '/',
+      builder: (BuildContext context, GoRouterState state) {
+        return HomePage();
+      },
+      routes: <RouteBase>[
+        GoRoute(
+          path: 'cart',
+          builder: (BuildContext context, GoRouterState state) {
+            return CartPage(articles: state.extra as List<Article>);
+          },
+        ),
+      ],
+    ),
+  ],
+);
