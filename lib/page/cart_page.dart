@@ -27,7 +27,8 @@ class CartPageSate extends State<CartPage> {
       price += element.prix;
     });
     setState(() {
-      widget.cartPrice = price;
+      widget.cartPrice = num.parse((price).toStringAsFixed(2));
+      ;
     });
 
     return Scaffold(
@@ -40,7 +41,7 @@ class CartPageSate extends State<CartPage> {
             backgroundColor: Theme.of(context).colorScheme.inversePrimary),
         body: Padding(
           padding: const EdgeInsets.all(15.0),
-          child: Stack(
+          child: Column(
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -49,10 +50,10 @@ class CartPageSate extends State<CartPage> {
                   Text("${widget.cartPrice.toString()} €"),
                 ],
               ),
-              Center(
-                child: widget.articles.isEmpty
-                    ? const EmptyCart()
-                    : ListView.builder(
+              widget.articles.isEmpty
+                  ? const Center(child: EmptyCart())
+                  : Expanded(
+                      child: ListView.builder(
                         itemCount: widget.articles.length,
                         itemBuilder: (context, index) {
                           return ListTile(
@@ -69,7 +70,7 @@ class CartPageSate extends State<CartPage> {
                           );
                         },
                       ),
-              )
+                    )
             ],
           ),
         ));
