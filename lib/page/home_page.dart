@@ -105,17 +105,19 @@ class HomePageSate extends State<HomePage> {
                   itemBuilder: (context, index) {
                     return ListTile(
                       tileColor: Colors.black26,
-                      trailing: Column(children: <Widget>[
-                        IconButton(
-                          onPressed: () => onAdd(listArticles[index]),
-                          icon: Icon(Icons.add),
-                        ),
-                        IconButton(
-                          onPressed: () =>
-                              context.go('/detail', extra: listArticles[index]),
-                          icon: Icon(Icons.info),
-                        )
-                      ]),
+                      trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            IconButton(
+                              onPressed: () => onAdd(listArticles[index]),
+                              icon: const Icon(Icons.add),
+                            ),
+                            IconButton(
+                              onPressed: () => context.go('/detail',
+                                  extra: listArticles[index]),
+                              icon: const Icon(Icons.info),
+                            )
+                          ]),
                       title: Text(listArticles[index].nom),
                       subtitle: Text(
                         listArticles[index].prixEuro(),
