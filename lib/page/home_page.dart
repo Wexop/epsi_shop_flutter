@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:epsi_shop/bo/article.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 import '../bo/cart.dart';
@@ -13,52 +16,36 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageSate extends State<HomePage> {
-  final List<Article> listArticles = <Article>[
-    Article(
-      nom: "Collier en Or",
-      image:
-          "https://www.cdiscount.com/pdt2/9/0/9/1/300x300/ave2009931149909/rw/collier-palmier-or-jaune-18-carats-chute.jpg",
-      description:
-          "Un magnifique collier en or, parfait pour toutes les occasions.",
-      prix: 149.99,
-      categorie: "Bijoux",
-    ),
-    Article(
-      nom: "Montre élégante",
-      image:
-          "https://i0.wp.com/boutiquedelily.com/wp-content/uploads/2018/07/Montre-%C3%A9l%C3%A9gante-dor%C3%A9e-strass.jpg?fit=640%2C590&ssl=1",
-      description:
-          "Une montre élégante qui ajoute une touche de sophistication à votre style.",
-      prix: 79.99,
-      categorie: "Accessoires",
-    ),
-    Article(
-      nom: "Boucles d'oreilles en argent",
-      image:
-          "https://fr.arthusbertrand.com/media/catalog/product/cache/a13e371ff89486190d360c321b80a612/b/o/boucles-oreilles-ruban-argent-sku-a10758x000-a.jpg",
-      description:
-          "Des boucles d'oreilles en argent avec un design moderne et chic.",
-      prix: 49.99,
-      categorie: "Bijoux",
-    ),
-    Article(
-      nom: "Sac à main en cuir",
-      image:
-          "https://www.duponddurand.com/14128-thickbox_default/benicha-sac-%C3%A0-main-en-cuir-.jpg",
-      description:
-          "Un sac à main en cuir de haute qualité, spacieux et élégant.",
-      prix: 129.99,
-      categorie: "Mode",
-    ),
-    Article(
-      nom: "Bracelet en perles",
-      image: "https://www.meilys.fr/photo/14892/400_1.jpg",
-      description:
-          "Un bracelet en perles naturelles, symbolisant l'élégance et la simplicité.",
-      prix: 34.99,
-      categorie: "Bijoux",
-    ),
-  ];
+  final List<Article> listArticles = <Article>[];
+
+  @override
+  void initState() {
+    fetchArticles();
+  }
+
+  Future<void> fetchArticles() async {
+    final response =
+        await http.get(Uri.parse('https://fakestoreapi.com/products'));
+
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      var result = jsonDecode(response.body) as List<dynamic>;
+
+      setState(() {
+        result.forEach((value) => listArticles.add(Article(
+            nom: value["title"],
+            image: value["image"],
+            description: value["description"],
+            prix: value["price"],
+            categorie: value["category"])));
+      });
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load album');
+    }
+  }
 
   final articleSelected = <Article>[];
 
@@ -100,7 +87,7 @@ class HomePageSate extends State<HomePage> {
           child: Stack(
             children: [
               Center(
-                child: ListView.builder(
+                child: ListView.separated(
                   itemCount: listArticles.length,
                   itemBuilder: (context, index) {
                     return ListTile(
@@ -129,6 +116,10 @@ class HomePageSate extends State<HomePage> {
                       ),
                     );
                   },
+                  separatorBuilder: (BuildContext context, int index) =>
+                      const SizedBox(
+                    height: 20,
+                  ),
                 ),
               )
             ],

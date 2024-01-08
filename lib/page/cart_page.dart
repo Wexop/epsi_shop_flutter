@@ -54,7 +54,7 @@ class CartPageSate extends State<CartPage> {
                           itemCount: cart.articles.length,
                           itemBuilder: (context, index) {
                             return ListTile(
-                              tileColor: Colors.blueAccent,
+                              tileColor: Colors.orangeAccent,
                               trailing: ElevatedButton(
                                   onPressed: () =>
                                       cart.remove(cart.articles[index]),
