@@ -50,7 +50,7 @@ class CartPageSate extends State<CartPage> {
                 return cart.articles.isEmpty
                     ? const Center(child: EmptyCart())
                     : Expanded(
-                        child: ListView.builder(
+                        child: ListView.separated(
                           itemCount: cart.articles.length,
                           itemBuilder: (context, index) {
                             return ListTile(
@@ -68,6 +68,10 @@ class CartPageSate extends State<CartPage> {
                               ),
                             );
                           },
+                          separatorBuilder: (BuildContext context, int index) =>
+                              const SizedBox(
+                            height: 20,
+                          ),
                         ),
                       );
               })

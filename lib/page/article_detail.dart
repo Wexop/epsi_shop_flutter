@@ -60,7 +60,7 @@ class ArticleDetailPage extends StatelessWidget {
                       style: const TextStyle(fontSize: 17))),
               Consumer<Cart>(builder: (context, cart, child) {
                 return TextButton(
-                  onPressed: cart.add(article),
+                  onPressed: () => cart.add(article),
                   child: const Text("Ajouter cet article au panier"),
                 );
               })
