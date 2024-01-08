@@ -4,6 +4,7 @@ class Article {
   String description;
   num prix;
   String categorie;
+  num quantite = 0;
 
   Article(
       {required this.nom,
@@ -30,11 +31,12 @@ void main() {
         prix: 3.80,
         categorie: "Soif"),
     Article(
-        nom: "Biscuit",
-        image: "",
-        description: "Biscuit délicieux",
-        prix: 1.34,
-        categorie: "Manger")
+      nom: "Biscuit",
+      image: "",
+      description: "Biscuit délicieux",
+      prix: 1.34,
+      categorie: "Manger",
+    )
   ];
 
   for (var element in listArticle) {

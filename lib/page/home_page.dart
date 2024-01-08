@@ -69,7 +69,7 @@ class HomePageSate extends State<HomePage> {
                       children: [
                         const Icon(Icons.shopping_cart),
                         Text(
-                          context.watch<Cart>().articles.length.toString(),
+                          context.watch<Cart>().getItemsNumber().toString(),
                           style: const TextStyle(fontSize: 20),
                         )
                       ],

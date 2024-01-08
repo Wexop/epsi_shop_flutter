@@ -18,7 +18,7 @@ class CartPageSate extends State<CartPage> {
   Widget build(BuildContext context) {
     num price = 0;
     context.watch<Cart>().articles.forEach((element) {
-      price += element.prix;
+      price += element.prix * element.quantite;
     });
     setState(() {
       widget.cartPrice = num.parse((price).toStringAsFixed(2));
@@ -59,9 +59,9 @@ class CartPageSate extends State<CartPage> {
                                   onPressed: () =>
                                       cart.remove(cart.articles[index]),
                                   child: const Icon(Icons.delete)),
-                              title: Text(
-                                  context.watch<Cart>().articles[index].nom),
-                              subtitle: Text(cart.articles[index].description),
+                              title: Text(cart.articles[index].nom),
+                              subtitle: Text(
+                                  "Prix: ${cart.articles[index].prixEuro()} x ${cart.articles[index].quantite}"),
                               leading: Image.network(
                                 cart.articles[index].image,
                                 scale: 1,
