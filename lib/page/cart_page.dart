@@ -36,12 +36,15 @@ class CartPageSate extends State<CartPage> {
           padding: const EdgeInsets.all(15.0),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  const Text("Votre panier est de : "),
-                  Text("${widget.cartPrice.toString()} €"),
-                ],
+              Container(
+                margin: const EdgeInsets.only(top: 10, bottom: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    const Text("Votre panier est de : "),
+                    Text("${widget.cartPrice.toString()} €"),
+                  ],
+                ),
               ),
               Consumer<Cart>(builder: (context, cart, child) {
                 return cart.articles.isEmpty
