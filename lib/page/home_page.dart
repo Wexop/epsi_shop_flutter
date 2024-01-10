@@ -23,7 +23,7 @@ class HomePageSate extends State<HomePage> {
     fetchArticles();
   }
 
-  Future<void> fetchArticles() async {
+  Future<Iterable<Article>> fetchArticles() async {
     final response =
         await http.get(Uri.parse('https://fakestoreapi.com/products'));
 
@@ -32,14 +32,7 @@ class HomePageSate extends State<HomePage> {
       // then parse the JSON.
       var result = jsonDecode(response.body) as List<dynamic>;
 
-      setState(() {
-        result.forEach((value) => listArticles.add(Article(
-            nom: value["title"],
-            image: value["image"],
-            description: value["description"],
-            prix: value["price"],
-            categorie: value["category"])));
-      });
+      return result.map((value) => Article.fromJson(value));
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
@@ -87,39 +80,50 @@ class HomePageSate extends State<HomePage> {
           child: Stack(
             children: [
               Center(
-                child: ListView.separated(
-                  itemCount: listArticles.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      tileColor: Colors.black26,
-                      trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            IconButton(
-                              onPressed: () => onAdd(listArticles[index]),
-                              icon: const Icon(Icons.add),
+                child: FutureBuilder<Iterable<Article>>(
+                  future: fetchArticles(),
+                  builder: (_, snapshot) {
+                    if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                      var articles = snapshot.data!.toList();
+                      return ListView.separated(
+                        itemCount: articles.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            tileColor: Colors.black26,
+                            trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  IconButton(
+                                    onPressed: () => onAdd(articles[index]),
+                                    icon: const Icon(Icons.add),
+                                  ),
+                                  IconButton(
+                                    onPressed: () => context.go('/detail',
+                                        extra: articles[index]),
+                                    icon: const Icon(Icons.info),
+                                  )
+                                ]),
+                            title: Text(articles[index].nom),
+                            subtitle: Text(
+                              articles[index].prixEuro(),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
                             ),
-                            IconButton(
-                              onPressed: () => context.go('/detail',
-                                  extra: listArticles[index]),
-                              icon: const Icon(Icons.info),
-                            )
-                          ]),
-                      title: Text(listArticles[index].nom),
-                      subtitle: Text(
-                        listArticles[index].prixEuro(),
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      leading: Image.network(
-                        listArticles[index].image,
-                        scale: 1,
-                      ),
-                    );
+                            leading: Image.network(
+                              articles[index].image,
+                              scale: 1,
+                            ),
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) =>
+                            const SizedBox(
+                          height: 20,
+                        ),
+                      );
+                    } else {
+                      return const Text("NO DATA");
+                    }
                   },
-                  separatorBuilder: (BuildContext context, int index) =>
-                      const SizedBox(
-                    height: 20,
-                  ),
                 ),
               )
             ],

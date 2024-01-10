@@ -1,10 +1,11 @@
 class Article {
-  String nom;
-  final String image;
-  String description;
-  num prix;
-  String categorie;
-  num quantite = 0;
+  late num id;
+  late String nom;
+  late String image;
+  late String description;
+  late num prix;
+  late String categorie;
+  late num quantite = 0;
 
   Article(
       {required this.nom,
@@ -12,6 +13,15 @@ class Article {
       required this.description,
       required this.prix,
       required this.categorie});
+
+  Article.fromJson(dynamic jsonArticle) {
+    id = jsonArticle["id"];
+    nom = jsonArticle["title"];
+    image = jsonArticle["image"];
+    description = jsonArticle["description"];
+    prix = jsonArticle["price"];
+    categorie = jsonArticle["category"];
+  }
 
   String prixEuro() {
     return "$prix €";

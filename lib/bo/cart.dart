@@ -7,9 +7,23 @@ class Cart with ChangeNotifier {
 
   List<Article> get articles => _articles;
 
+  findIndexById(num id) {
+    int? indexFound;
+    int index = 0;
+    for (var element in _articles) {
+      if (element.id == id) {
+        indexFound = index;
+      }
+      index += 1;
+    }
+
+    return indexFound;
+  }
+
   add(Article article) {
-    if (_articles.contains(article)) {
-      _articles[articles.indexOf(article)].quantite++;
+    int? index = findIndexById(article.id);
+    if (index != null) {
+      _articles[index].quantite++;
     } else {
       article.quantite = 1;
       _articles.add(article);
@@ -19,10 +33,11 @@ class Cart with ChangeNotifier {
   }
 
   remove(Article article) {
-    if (_articles.contains(article)) {
-      _articles[articles.indexOf(article)].quantite--;
-      if (_articles[articles.indexOf(article)].quantite < 1) {
-        remove(_articles.removeAt(articles.indexOf(article)));
+    int? index = findIndexById(article.id);
+    if (index != null) {
+      _articles[index].quantite--;
+      if (_articles[index].quantite < 1) {
+        remove(_articles.removeAt(index));
       }
     }
     notifyListeners();
@@ -35,9 +50,9 @@ class Cart with ChangeNotifier {
 
   getItemsNumber() {
     num count = 0;
-    _articles.forEach((element) {
+    for (var element in _articles) {
       count += element.quantite;
-    });
+    }
 
     return count;
   }
