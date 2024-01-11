@@ -10,13 +10,19 @@ class AboutUsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          mapController.move(LatLng(47.2060287, -1.5419), 18);
+        },
+        child: const Icon(Icons.gps_fixed),
+      ),
       body: FlutterMap(
-        options: MapOptions(initialCenter: LatLng(47.2060287, -1.5419)),
+        options: const MapOptions(initialCenter: LatLng(47.2060287, -1.5419)),
         mapController: mapController,
         children: [
           TileLayer(
               urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'),
-          MarkerLayer(markers: [
+          const MarkerLayer(markers: [
             Marker(
                 child: Icon(Icons.school), point: LatLng(47.2060287, -1.5419))
           ])
