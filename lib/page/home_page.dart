@@ -67,6 +67,12 @@ class HomePageSate extends State<HomePage> {
                         )
                       ],
                     )),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: FilledButton(
+                    onPressed: () => context.go("/aboutus"),
+                    child: const Icon(Icons.info_outline_rounded)),
               )
             ],
             title: const Center(
