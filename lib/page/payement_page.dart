@@ -37,16 +37,17 @@ class PayementPageState extends State<PayementPage> {
   }
 
   onPressPayement() {
-    http.post(Uri.parse('https://uneapirandom.com/achat'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, dynamic>{
-          'articles': context.read<Cart>().articles,
-          'total': context.read<Cart>().getTotalPrice(),
-          'payementMethode': widget.blockSelected,
-          'adresse': "8 rue des ouvertures de portes",
-        }));
+    http
+        .post(Uri.parse('http://ptsv3.com/t/EPSISHOPC2/'),
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: jsonEncode(<String, dynamic>{
+              'total': context.read<Cart>().getTotalPrice(),
+              'payementMethode': widget.blockSelected,
+              'adresse': "8 rue des ouvertures de portes",
+            }))
+        .then((value) => {print(value.body)});
 
     context.read<Cart>().removeAll();
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
