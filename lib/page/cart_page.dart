@@ -19,7 +19,7 @@ class CartPageSate extends State<CartPage> {
   Widget build(BuildContext context) {
     setState(() {
       widget.cartPrice =
-          num.parse(context.read<Cart>().getTotalPrice().toStringAsFixed(2));
+          num.parse(context.watch<Cart>().getTotalPrice().toStringAsFixed(2));
     });
 
     return Scaffold(
@@ -30,12 +30,13 @@ class CartPageSate extends State<CartPage> {
               ),
             ),
             backgroundColor: Theme.of(context).colorScheme.inversePrimary),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () => context.go("/cart/payement"),
-          label: const Text('Procéder au paiement'),
-          icon: const Icon(Icons.payment),
-          enableFeedback: context.read<Cart>().articles.isNotEmpty,
-        ),
+        floatingActionButton: context.watch<Cart>().articles.isNotEmpty
+            ? FloatingActionButton.extended(
+                onPressed: () => context.go("/cart/payement"),
+                label: const Text('Procéder au paiement'),
+                icon: const Icon(Icons.payment),
+              )
+            : null,
         body: Padding(
           padding: const EdgeInsets.all(15.0),
           child: Column(
