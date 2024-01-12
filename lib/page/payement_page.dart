@@ -73,6 +73,14 @@ class PayementPageState extends State<PayementPage> {
                     ),
                   ),
                   const AdresseCard(),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 20, left: 8),
+                    child: ResumeText(
+                      text1: "Méthode de paiement",
+                      text2: "",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
                   Padding(
                       padding: const EdgeInsets.only(top: 20, left: 8),
                       child: Row(

@@ -53,6 +53,7 @@ class PayementResumeCard extends StatelessWidget {
                   ResumeText(
                     text1: "TOTAL",
                     text2: "${totalPrice.toString()}€",
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   )
                 ],
               ),

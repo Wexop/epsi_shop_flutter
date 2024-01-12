@@ -51,6 +51,9 @@ class PayementBlockState extends State<PayementBlock> {
                     child: FaIcon(
                   widget.icon,
                   size: 40,
+                  color: widget.selected
+                      ? Theme.of(context).primaryColor
+                      : Colors.black,
                 )))),
       ),
     );
