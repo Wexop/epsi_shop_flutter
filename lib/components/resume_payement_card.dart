@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../bo/cart.dart';
-import 'ResumeText.dart';
+import 'resume_text.dart';
 
 class PayementResumeCard extends StatelessWidget {
   const PayementResumeCard({
