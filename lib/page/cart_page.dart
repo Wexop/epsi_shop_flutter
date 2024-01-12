@@ -1,5 +1,6 @@
 import 'package:epsi_shop/bo/cart.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class CartPage extends StatefulWidget {
@@ -16,12 +17,9 @@ class CartPageSate extends State<CartPage> {
 
   @override
   Widget build(BuildContext context) {
-    num price = 0;
-    context.watch<Cart>().articles.forEach((element) {
-      price += element.prix * element.quantite;
-    });
     setState(() {
-      widget.cartPrice = num.parse((price).toStringAsFixed(2));
+      widget.cartPrice =
+          num.parse(context.read<Cart>().getTotalPrice().toStringAsFixed(2));
     });
 
     return Scaffold(
@@ -32,6 +30,12 @@ class CartPageSate extends State<CartPage> {
               ),
             ),
             backgroundColor: Theme.of(context).colorScheme.inversePrimary),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () => context.go("/cart/payement"),
+          label: const Text('Procéder au paiement'),
+          icon: const Icon(Icons.payment),
+          enableFeedback: context.read<Cart>().articles.isNotEmpty,
+        ),
         body: Padding(
           padding: const EdgeInsets.all(15.0),
           child: Column(

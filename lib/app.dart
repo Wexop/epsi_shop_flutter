@@ -3,6 +3,7 @@ import 'package:epsi_shop/page/about_us_page.dart';
 import 'package:epsi_shop/page/article_detail.dart';
 import 'package:epsi_shop/page/cart_page.dart';
 import 'package:epsi_shop/page/home_page.dart';
+import 'package:epsi_shop/page/payement_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -36,7 +37,14 @@ final GoRouter _router = GoRouter(
             path: 'cart',
             builder: (_, __) {
               return CartPage();
-            }),
+            },
+            routes: [
+              GoRoute(
+                  path: 'payement',
+                  builder: (_, __) {
+                    return PayementPage();
+                  }),
+            ]),
         GoRoute(
             path: 'aboutus',
             builder: (_, __) {

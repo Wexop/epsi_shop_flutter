@@ -48,12 +48,21 @@ class Cart with ChangeNotifier {
     notifyListeners();
   }
 
-  getItemsNumber() {
+  num getItemsNumber() {
     num count = 0;
     for (var element in _articles) {
       count += element.quantite;
     }
 
     return count;
+  }
+
+  num getTotalPrice() {
+    num price = 0;
+    _articles.forEach((element) {
+      price += element.prix * element.quantite;
+    });
+
+    return price;
   }
 }
