@@ -14,7 +14,7 @@ import '../components/resume_text.dart';
 
 class PayementPage extends StatefulWidget {
   num cartPrice = 0;
-  String blockSelected = "ApplePay";
+  String? blockSelected;
 
   PayementPage({super.key});
 
@@ -37,18 +37,16 @@ class PayementPageState extends State<PayementPage> {
   }
 
   onPressPayement() {
-    http.post(
-      Uri.parse('https://uneapirandom.com/achat'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        'articles': context.read<Cart>().articles.toString(),
-        'total': context.read<Cart>().getTotalPrice().toString(),
-        'payementMethode': widget.blockSelected,
-        'adresse': "8 rue des ouvertures de portes",
-      }),
-    );
+    http.post(Uri.parse('https://uneapirandom.com/achat'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'articles': context.read<Cart>().articles,
+          'total': context.read<Cart>().getTotalPrice(),
+          'payementMethode': widget.blockSelected,
+          'adresse': "8 rue des ouvertures de portes",
+        }));
 
     context.read<Cart>().removeAll();
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -65,11 +63,13 @@ class PayementPageState extends State<PayementPage> {
             ),
           ),
           backgroundColor: Theme.of(context).colorScheme.inversePrimary),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => onPressPayement(),
-        label: const Text("Confirmer l'achat"),
-        icon: const Icon(Icons.payment_outlined),
-      ),
+      floatingActionButton: widget.blockSelected != null
+          ? FloatingActionButton.extended(
+              onPressed: () => onPressPayement(),
+              label: const Text("Confirmer l'achat"),
+              icon: const Icon(Icons.payment_outlined),
+            )
+          : null,
       body: Padding(
         padding: const EdgeInsets.all(2.0),
         child: FractionallySizedBox(
