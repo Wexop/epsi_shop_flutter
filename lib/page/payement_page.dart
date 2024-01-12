@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 import '../bo/cart.dart';
@@ -34,6 +37,19 @@ class PayementPageState extends State<PayementPage> {
   }
 
   onPressPayement() {
+    http.post(
+      Uri.parse('https://uneapirandom.com/achat'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'articles': context.read<Cart>().articles.toString(),
+        'total': context.read<Cart>().getTotalPrice().toString(),
+        'payementMethode': widget.blockSelected,
+        'adresse': "8 rue des ouvertures de portes",
+      }),
+    );
+
     context.read<Cart>().removeAll();
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
     context.go("/");
