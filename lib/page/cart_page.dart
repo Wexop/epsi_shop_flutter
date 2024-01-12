@@ -59,11 +59,15 @@ class CartPageSate extends State<CartPage> {
                           itemCount: cart.articles.length,
                           itemBuilder: (context, index) {
                             return ListTile(
-                              tileColor: Colors.orangeAccent,
+                              tileColor:
+                                  Theme.of(context).colorScheme.inversePrimary,
                               trailing: ElevatedButton(
                                   onPressed: () =>
                                       cart.remove(cart.articles[index]),
-                                  child: const Icon(Icons.delete)),
+                                  child: const Icon(
+                                    Icons.delete,
+                                    color: Colors.black,
+                                  )),
                               title: Text(cart.articles[index].nom),
                               subtitle: Text(
                                   "Prix: ${cart.articles[index].prixEuro()} x ${cart.articles[index].quantite}"),
