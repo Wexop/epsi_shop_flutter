@@ -42,46 +42,58 @@ class PayementPageState extends State<PayementPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(2.0),
-        child: Column(
-          children: [
-            const PayementResumeCard(),
-            const Padding(
-              padding: EdgeInsets.only(top: 20, left: 8),
-              child: ResumeText(
-                text1: "Adresse de livraison",
-                text2: "",
-                style: TextStyle(fontWeight: FontWeight.bold),
+        child: FractionallySizedBox(
+          heightFactor: 0.85,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                children: [
+                  const PayementResumeCard(),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 20, left: 8),
+                    child: ResumeText(
+                      text1: "Adresse de livraison",
+                      text2: "",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  const AdresseCard(),
+                  Padding(
+                      padding: const EdgeInsets.only(top: 20, left: 8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          PayementBlock(
+                            selected: widget.blockSelected == "ApplePay",
+                            onPress: () => selectBlock("ApplePay"),
+                            icon: FontAwesomeIcons.ccApplePay,
+                          ),
+                          PayementBlock(
+                            selected: widget.blockSelected == "Visa",
+                            onPress: () => selectBlock("Visa"),
+                            icon: FontAwesomeIcons.ccVisa,
+                          ),
+                          PayementBlock(
+                            selected: widget.blockSelected == "MasterCard",
+                            onPress: () => selectBlock("MasterCard"),
+                            icon: FontAwesomeIcons.ccMastercard,
+                          ),
+                          PayementBlock(
+                            selected: widget.blockSelected == "PayPal",
+                            onPress: () => selectBlock("PayPal"),
+                            icon: FontAwesomeIcons.ccPaypal,
+                          ),
+                        ],
+                      )),
+                ],
               ),
-            ),
-            const AdresseCard(),
-            Padding(
-                padding: const EdgeInsets.only(top: 20, left: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    PayementBlock(
-                      selected: widget.blockSelected == "ApplePay",
-                      onPress: () => selectBlock("ApplePay"),
-                      icon: FontAwesomeIcons.ccApplePay,
-                    ),
-                    PayementBlock(
-                      selected: widget.blockSelected == "Visa",
-                      onPress: () => selectBlock("Visa"),
-                      icon: FontAwesomeIcons.ccVisa,
-                    ),
-                    PayementBlock(
-                      selected: widget.blockSelected == "MasterCard",
-                      onPress: () => selectBlock("MasterCard"),
-                      icon: FontAwesomeIcons.ccMastercard,
-                    ),
-                    PayementBlock(
-                      selected: widget.blockSelected == "PayPal",
-                      onPress: () => selectBlock("PayPal"),
-                      icon: FontAwesomeIcons.ccPaypal,
-                    ),
-                  ],
-                )),
-          ],
+              const Text(
+                  "En cliquant sur << confirmer l'achat >> vous accepter les Conditions de Vente de EPSI Shop International. Besoin d'aide ? Va voir ailleur \n"
+                  "Veuillez vous préparer mentalement à ne rien recevoir au bout d'un mois. Pas de contact avec notre équipe possible, nous sommes une belle arnaque. \n\n"
+                  "Merci pour votre argent !")
+            ],
+          ),
         ),
       ),
     );
