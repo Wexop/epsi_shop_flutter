@@ -21,7 +21,10 @@ class ResumeText extends StatelessWidget {
           text1,
           style: style,
         ),
-        Text(text2),
+        Text(
+          text2,
+          style: style,
+        ),
       ],
     );
   }

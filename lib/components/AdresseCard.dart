@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../bo/cart.dart';
-import 'ResumeText.dart';
 
 class AdresseCard extends StatelessWidget {
   const AdresseCard({
@@ -30,21 +29,30 @@ class AdresseCard extends StatelessWidget {
             widthFactor: 0.95,
             child: Padding(
               padding: EdgeInsets.all(5.0),
-              child: Column(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ResumeText(
-                    text1: "Michel Le Poney",
-                    text2: "",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  Column(
+                    children: [
+                      Text(
+                        "Michel Le Poney",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        "8 rue des ouvertures de portes",
+                      ),
+                      Text(
+                        "93024 CORBEAUX",
+                      ),
+                    ],
                   ),
-                  ResumeText(
-                    text1: "8 rue des ouvertures de portes",
-                    text2: "",
-                  ),
-                  ResumeText(
-                    text1: "93024 CORBEAUX",
-                    text2: "",
-                  ),
+                  Padding(
+                    padding: EdgeInsets.only(right: 20),
+                    child: Icon(
+                      Icons.arrow_forward_ios,
+                      size: 16,
+                    ),
+                  )
                 ],
               ),
             ),

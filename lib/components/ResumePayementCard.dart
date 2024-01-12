@@ -44,6 +44,7 @@ class PayementResumeCard extends StatelessWidget {
                   const ResumeText(
                     text1: "Vous économisez",
                     text2: "-0.0€",
+                    style: TextStyle(color: Colors.green),
                   ),
                   ResumeText(
                     text1: "TVA",
