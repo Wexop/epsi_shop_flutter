@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
+import '../bo/cart.dart';
 import '../components/adresse_card.dart';
 import '../components/payement_block.dart';
 import '../components/resume_payement_card.dart';
@@ -19,10 +22,21 @@ class PayementPage extends StatefulWidget {
 class PayementPageState extends State<PayementPage> {
   PayementPageState();
 
+  static const snackBar = SnackBar(
+    content: Text('Votre achat à été confirmé !'),
+    showCloseIcon: true,
+  );
+
   selectBlock(String name) {
     setState(() {
       widget.blockSelected = name;
     });
+  }
+
+  onPressPayement() {
+    context.read<Cart>().removeAll();
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    context.go("/");
   }
 
   @override
@@ -36,7 +50,7 @@ class PayementPageState extends State<PayementPage> {
           ),
           backgroundColor: Theme.of(context).colorScheme.inversePrimary),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => {},
+        onPressed: () => onPressPayement(),
         label: const Text("Confirmer l'achat"),
         icon: const Icon(Icons.payment_outlined),
       ),
